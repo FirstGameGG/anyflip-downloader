@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+:root {
+  --color-navy: #003366;
+  --color-ink: #2f3747;
+  --color-blue: #2f80ed;
+  --color-sky: #e3f2fd;
+  --color-green: #0f9f6e;
+  --color-amber: #d97706;
+  --color-red: #dc2626;
+  --color-line: #dbe3ef;
+  --color-panel: #f3f6fa;
+  --color-white: #ffffff;
+  --font-thai: 'Sarabun', 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.12);
+}
+
+html,
+body,
+[data-testid="stAppViewContainer"] {
+  font-family: var(--font-thai);
+  color: var(--color-ink);
+  background: var(--color-white);
+}
+
+[data-testid="stAppViewContainer"] [class*="material-symbols"] {
+  font-family: 'Material Symbols Rounded', 'Material Symbols Outlined' !important;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+}
+
+.block-container {
+  max-width: 1180px;
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-8);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-navy) !important;
+  font-family: var(--font-thai) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0;
+}
+
+h1 {
+  font-size: 2.35rem !important;
+  margin-bottom: var(--space-2) !important;
+}
+
+h2 {
+  color: var(--color-blue) !important;
+  font-size: 1.45rem !important;
+  font-weight: 600 !important;
+}
+
+h3 {
+  display: inline-block;
+  border-bottom: 3px solid var(--color-blue);
+  padding-bottom: var(--space-2);
+  margin-top: var(--space-6) !important;
+}
+
+p,
+li,
+label,
+span {
+  font-family: var(--font-thai) !important;
+}
+
+code {
+  font-family: var(--font-mono) !important;
+}
+
+.stButton > button,
+.stFormSubmitButton > button {
+  background: var(--color-navy) !important;
+  border: 1px solid var(--color-navy) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--color-white) !important;
+  font-family: var(--font-thai) !important;
+  font-weight: 700 !important;
+  padding: var(--space-3) var(--space-6) !important;
+  box-shadow: var(--shadow-sm);
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.stButton > button:hover,
+.stFormSubmitButton > button:hover {
+  background: #001f3f !important;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.stDownloadButton > button {
+  background: var(--color-blue) !important;
+  border: 1px solid var(--color-blue) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--color-white) !important;
+  font-family: var(--font-thai) !important;
+  font-weight: 700 !important;
+  padding: var(--space-3) var(--space-6) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+.stDownloadButton > button:hover {
+  background: #1c64c8 !important;
+  box-shadow: var(--shadow-md);
+}
+
+.stTextInput input,
+.stNumberInput input {
+  border: 2px solid var(--color-line) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--color-ink) !important;
+  font-family: var(--font-thai) !important;
+}
+
+.stTextInput input:focus,
+.stNumberInput input:focus {
+  border-color: var(--color-blue) !important;
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.14) !important;
+}
+
+.stCheckbox > label {
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  transition: background-color 180ms ease;
+}
+
+.stCheckbox > label:hover {
+  background: var(--color-sky);
+}
+
+div[data-testid="stExpander"] {
+  border: 1px solid var(--color-line) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-sm);
+}
+
+div[data-testid="stExpander"] summary {
+  color: var(--color-navy) !important;
+  font-weight: 700 !important;
+}
+
+.stAlert {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-thai) !important;
+}
+
+div[data-baseweb="notification"][kind="info"] {
+  background-color: rgba(47, 128, 237, 0.10) !important;
+  border-left: 4px solid var(--color-blue) !important;
+}
+
+div[data-baseweb="notification"][kind="success"] {
+  background-color: rgba(15, 159, 110, 0.10) !important;
+  border-left: 4px solid var(--color-green) !important;
+}
+
+div[data-baseweb="notification"][kind="warning"] {
+  background-color: rgba(217, 119, 6, 0.10) !important;
+  border-left: 4px solid var(--color-amber) !important;
+}
+
+div[data-baseweb="notification"][kind="error"] {
+  background-color: rgba(220, 38, 38, 0.10) !important;
+  border-left: 4px solid var(--color-red) !important;
+}
+
+.stProgress > div > div > div {
+  background: var(--color-blue) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.stProgress > div > div {
+  background: var(--color-panel) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+div[data-testid="stMetric"] {
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.main img {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-footer {
+  color: #687386;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-blue) !important;
+  outline-offset: 2px !important;
+}
+
+@media (max-width: 768px) {
+  .block-container {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  h1 {
+    font-size: 1.9rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -11,6 +11,25 @@ Download anyflip books as PDF
 
 Only use this tool to download books that officially allow PDFs to be downloaded.
 
+## Streamlit web app
+
+This repository now includes a Python-native Streamlit app for downloading one allowed AnyFlip book at a time and exporting it as a PDF.
+
+### Run locally
+
+```sh
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+### Deploy to Streamlit Community Cloud
+
+Use `app.py` as the app entrypoint. Python dependencies are declared in `requirements.txt`, and the Streamlit theme is configured in `.streamlit/config.toml`.
+
+The web app keeps generated PDFs in the active Streamlit session only. It does not store download history or persist output files.
+
 ## Installation
 You can install this tool in multiple ways. Using the installation script or the go install command.
 
