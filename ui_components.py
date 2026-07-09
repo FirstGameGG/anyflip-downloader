@@ -26,6 +26,8 @@ def render_header(base_dir: Path) -> None:
         if demo_path.exists():
             st.image(str(demo_path), width="stretch")
 
+    st.divider()
+
 
 def format_bytes(size: int) -> str:
     value = float(size)

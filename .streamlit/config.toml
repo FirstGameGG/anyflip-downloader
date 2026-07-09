@@ -1,9 +1,15 @@
+# Bank of Thailand Design System — native Streamlit theme
+# Navy is the primary action (buttons, overridden in style.css); blue-600 is the
+# interactive colour Streamlit uses for links, checks, sliders and focus.
 [theme]
-primaryColor = "#2F80ED"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F3F6FA"
-textColor = "#2F3747"
+primaryColor = "#1868b7"                    # blue-600 — interactive accents
+backgroundColor = "#ffffff"                 # white page
+secondaryBackgroundColor = "#f6f7f9"        # grey-50 — cards / code
+textColor = "#23282e"                       # grey-900 — primary ink
+linkColor = "#1868b7"                       # blue-600
+borderColor = "#e3e6ea"                     # grey-200 — hairline widget borders
 font = "sans serif"
+headingFont = "sans serif"
 
 [server]
 headless = true

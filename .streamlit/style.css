@@ -1,244 +1,228 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+/* ============================================================
+   Bank of Thailand Design System — Streamlit adaptation
+   Tokens taken verbatim from the BOT Design System (tokens/*.css).
+   Character: light, text-forward, institutional. White page,
+   navy as punctuation (headings / primary action), flat fills,
+   1px hairline grey borders, navy-tinted shallow shadows, low
+   radii, minimal motion. No gradients, no bounce, no lift.
+   Kept in sync with the meteorological-fetcher stylesheet.
+   ============================================================ */
+
+/* Sarabun (Thai + Latin) + IBM Plex Mono for tabular figures.
+   Material Symbols is load-bearing: Streamlit's :material/…: icons render with it. */
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 :root {
-  --color-navy: #003366;
-  --color-ink: #2f3747;
-  --color-blue: #2f80ed;
-  --color-sky: #e3f2fd;
-  --color-green: #0f9f6e;
-  --color-amber: #d97706;
-  --color-red: #dc2626;
-  --color-line: #dbe3ef;
-  --color-panel: #f3f6fa;
-  --color-white: #ffffff;
-  --font-thai: 'Sarabun', 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 6px 16px rgba(15, 23, 42, 0.12);
+  /* Navy — brand / CTA / headings */
+  --navy-900:#0a1f3d; --navy-800:#0f2a52; --navy-700:#14345f; --navy-600:#1c4a80; --navy-500:#2a5f9e;
+  /* Blue — interactive / links / accent action */
+  --blue-600:#1868b7; --blue-500:#1f7fd6; --blue-400:#4098e0; --blue-100:#e4f0fb;
+  /* Light blue — tints / hover washes */
+  --lightblue-400:#5bb8e8; --lightblue-200:#b3ddf3; --lightblue-100:#dcf0fa;
+  /* Grey — neutrals do the structural work */
+  --grey-900:#23282e; --grey-800:#383f47; --grey-700:#545c66; --grey-600:#6d7580; --grey-500:#8a919b;
+  --grey-400:#aeb4bc; --grey-300:#ced2d8; --grey-200:#e3e6ea; --grey-100:#eef0f3; --grey-50:#f6f7f9; --white:#ffffff;
+  /* Semantic — forms/status only, muted + institutional */
+  --red-600:#c0342a;  --red-100:#fbe9e7;
+  --green-600:#2a7d4f; --green-100:#e6f4ea;
+  --gold-600:#a97c1f;  --gold-100:#faf1de;
+
+  /* Semantic aliases */
+  --color-bg:var(--white); --color-bg-subtle:var(--grey-50); --color-bg-tint:var(--lightblue-100);
+  --color-surface:var(--white); --color-surface-sunken:var(--grey-100);
+  --color-text-primary:var(--grey-900); --color-text-secondary:var(--grey-700); --color-text-muted:var(--grey-500);
+  --color-text-brand:var(--navy-800); --color-text-link:var(--blue-600);
+  --color-border:var(--grey-200); --color-border-strong:var(--grey-400); --color-border-focus:var(--blue-500);
+  --color-action-primary:var(--navy-800); --color-action-primary-hover:var(--navy-900); --color-action-primary-active:#071527;
+
+  /* Type */
+  --font-sans:"Sarabun","Noto Sans Thai","Segoe UI",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,monospace;
+
+  /* Space — 4px scale */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+
+  /* Radii / shadows / motion — low + shallow + navy-tinted */
+  --radius-xs:3px; --radius-sm:4px; --radius-md:6px; --radius-lg:10px; --radius-pill:999px;
+  --shadow-xs:0 1px 2px rgba(10,31,61,.06);
+  --shadow-sm:0 2px 6px rgba(10,31,61,.08);
+  --shadow-md:0 6px 16px rgba(10,31,61,.10);
+  --shadow-focus:0 0 0 3px rgba(31,127,214,.28);
+  --border-hairline:1px solid var(--color-border);
+  --ease:cubic-bezier(.4,0,.2,1); --dur-fast:120ms; --dur:200ms;
 }
 
-html,
-body,
-[data-testid="stAppViewContainer"] {
-  font-family: var(--font-thai);
-  color: var(--color-ink);
-  background: var(--color-white);
+/* ---- Base ---- */
+html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
 }
-
-[data-testid="stAppViewContainer"] [class*="material-symbols"] {
-  font-family: 'Material Symbols Rounded', 'Material Symbols Outlined' !important;
-  font-weight: 400;
-  font-style: normal;
-  line-height: 1;
-}
-
 .block-container {
-  max-width: 1180px;
+  max-width: 1100px;
   padding-top: var(--space-8);
-  padding-bottom: var(--space-8);
+  padding-bottom: var(--space-12);
+}
+p, li, label, span, div { font-family: var(--font-sans); }
+code, pre, kbd { font-family: var(--font-mono) !important; }
+
+/* Material Symbols must keep their own font (never inherit Sarabun) */
+[data-testid="stAppViewContainer"] [class*="material-symbols"],
+[data-testid="stIconMaterial"] {
+  font-family: 'Material Symbols Rounded', 'Material Symbols Outlined' !important;
+  font-weight: 400; font-style: normal; line-height: 1;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--color-navy) !important;
-  font-family: var(--font-thai) !important;
-  font-weight: 700 !important;
+/* ---- Headings — navy title, blue subtitle, section accent rule ---- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans) !important;
+  color: var(--color-text-brand) !important;
   letter-spacing: 0;
 }
-
-h1 {
-  font-size: 2.35rem !important;
-  margin-bottom: var(--space-2) !important;
-}
-
-h2 {
-  color: var(--color-blue) !important;
-  font-size: 1.45rem !important;
-  font-weight: 600 !important;
-}
-
+h1 { font-size: 2.25rem !important; font-weight: 700 !important; margin-bottom: var(--space-2) !important; }
+h2 { color: var(--blue-600) !important; font-size: 1.6rem !important; font-weight: 600 !important; }
 h3 {
-  display: inline-block;
-  border-bottom: 3px solid var(--color-blue);
+  font-size: 1.35rem !important; font-weight: 600 !important;
+  margin-top: var(--space-8) !important; margin-bottom: var(--space-4) !important;
   padding-bottom: var(--space-2);
-  margin-top: var(--space-6) !important;
+  border-bottom: 2px solid var(--blue-500);
+  display: inline-block;
 }
+h4 { font-size: 1.125rem !important; font-weight: 600 !important; margin-top: var(--space-5) !important; }
 
-p,
-li,
-label,
-span {
-  font-family: var(--font-thai) !important;
-}
+a { color: var(--color-text-link); text-decoration: none; }
+a:hover { color: var(--navy-800); text-decoration: underline; }
 
-code {
-  font-family: var(--font-mono) !important;
-}
+[data-testid="stCaptionContainer"], .stCaption, small { color: var(--color-text-secondary) !important; }
+hr, [data-testid="stDivider"] { border-color: var(--color-border) !important; }
 
-.stButton > button,
-.stFormSubmitButton > button {
-  background: var(--color-navy) !important;
-  border: 1px solid var(--color-navy) !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--color-white) !important;
-  font-family: var(--font-thai) !important;
-  font-weight: 700 !important;
+/* ---- Buttons — flat navy CTA, darken on hover, no gradient/lift ---- */
+.stButton > button, .stFormSubmitButton > button, [data-testid="stBaseButton-primary"] {
+  background: var(--color-action-primary) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--color-action-primary) !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
   padding: var(--space-3) var(--space-6) !important;
+  box-shadow: var(--shadow-xs);
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.stButton > button:hover, .stFormSubmitButton > button:hover, [data-testid="stBaseButton-primary"]:hover {
+  background: var(--color-action-primary-hover) !important;
+  border-color: var(--color-action-primary-hover) !important;
   box-shadow: var(--shadow-sm);
-  transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
+.stButton > button:active, .stFormSubmitButton > button:active { background: var(--color-action-primary-active) !important; }
 
-.stButton > button:hover,
-.stFormSubmitButton > button:hover {
-  background: #001f3f !important;
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
+/* Download = blue accent (secondary action; visual hierarchy vs navy CTA) */
 .stDownloadButton > button {
-  background: var(--color-blue) !important;
-  border: 1px solid var(--color-blue) !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--color-white) !important;
-  font-family: var(--font-thai) !important;
-  font-weight: 700 !important;
+  background: var(--blue-600) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--blue-600) !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: var(--font-sans) !important;
+  font-weight: 500 !important;
   padding: var(--space-3) var(--space-6) !important;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-xs);
+  transition: background var(--dur-fast) var(--ease);
+}
+.stDownloadButton > button:hover { background: #125a9e !important; border-color: #125a9e !important; }
+
+/* ---- Inputs — 1px hairline, blue focus ring ---- */
+.stTextInput input, .stNumberInput input, .stDateInput input,
+[data-baseweb="select"] > div, [data-baseweb="input"] > div {
+  border: var(--border-hairline) !important;
+  border-radius: var(--radius-sm) !important;
+  background: var(--white) !important;
+  color: var(--color-text-primary) !important;
+  font-family: var(--font-sans) !important;
+}
+.stTextInput input:focus, .stNumberInput input:focus, .stDateInput input:focus {
+  border-color: var(--color-border-focus) !important;
+  box-shadow: var(--shadow-focus) !important;
+}
+[data-baseweb="select"] > div:focus-within, [data-baseweb="input"] > div:focus-within {
+  border-color: var(--color-border-focus) !important;
+  box-shadow: var(--shadow-focus) !important;
 }
 
-.stDownloadButton > button:hover {
-  background: #1c64c8 !important;
-  box-shadow: var(--shadow-md);
+/* ---- Form — group the inputs into a bordered panel ---- */
+[data-testid="stForm"] {
+  border: var(--border-hairline) !important;
+  border-radius: var(--radius-lg) !important;
+  background: var(--color-surface) !important;
+  box-shadow: var(--shadow-xs);
+  padding: var(--space-6) !important;
 }
 
-.stTextInput input,
-.stNumberInput input {
-  border: 2px solid var(--color-line) !important;
-  border-radius: var(--radius-md) !important;
-  color: var(--color-ink) !important;
-  font-family: var(--font-thai) !important;
-}
+/* ---- Checkboxes — subtle brand-tint hover ---- */
+.stCheckbox > label { border-radius: var(--radius-sm); padding: var(--space-1) var(--space-2); transition: background var(--dur) var(--ease); }
+.stCheckbox > label:hover { background: var(--color-bg-tint); }
 
-.stTextInput input:focus,
-.stNumberInput input:focus {
-  border-color: var(--color-blue) !important;
-  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.14) !important;
-}
-
-.stCheckbox > label {
+/* ---- Metric cards (StatTicker pattern) ---- */
+[data-testid="stMetric"] {
+  background: var(--color-surface);
+  border: var(--border-hairline);
   border-radius: var(--radius-md);
-  padding: var(--space-2) var(--space-3);
-  transition: background-color 180ms ease;
-}
-
-.stCheckbox > label:hover {
-  background: var(--color-sky);
-}
-
-div[data-testid="stExpander"] {
-  border: 1px solid var(--color-line) !important;
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-sm);
-}
-
-div[data-testid="stExpander"] summary {
-  color: var(--color-navy) !important;
-  font-weight: 700 !important;
-}
-
-.stAlert {
-  border-radius: var(--radius-lg) !important;
-  box-shadow: var(--shadow-sm);
-  font-family: var(--font-thai) !important;
-}
-
-div[data-baseweb="notification"][kind="info"] {
-  background-color: rgba(47, 128, 237, 0.10) !important;
-  border-left: 4px solid var(--color-blue) !important;
-}
-
-div[data-baseweb="notification"][kind="success"] {
-  background-color: rgba(15, 159, 110, 0.10) !important;
-  border-left: 4px solid var(--color-green) !important;
-}
-
-div[data-baseweb="notification"][kind="warning"] {
-  background-color: rgba(217, 119, 6, 0.10) !important;
-  border-left: 4px solid var(--color-amber) !important;
-}
-
-div[data-baseweb="notification"][kind="error"] {
-  background-color: rgba(220, 38, 38, 0.10) !important;
-  border-left: 4px solid var(--color-red) !important;
-}
-
-.stProgress > div > div > div {
-  background: var(--color-blue) !important;
-  border-radius: var(--radius-md) !important;
-}
-
-.stProgress > div > div {
-  background: var(--color-panel) !important;
-  border-radius: var(--radius-md) !important;
-}
-
-div[data-testid="stMetric"] {
-  background: var(--color-white);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-lg);
   padding: var(--space-4);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-xs);
 }
+[data-testid="stMetricLabel"] { color: var(--grey-600) !important; font-size: .8rem !important; }
+[data-testid="stMetricValue"] { color: var(--color-text-brand) !important; font-weight: 600 !important; }
 
-.main img {
-  border: 1px solid var(--color-line);
+/* ---- Alerts — 4px left rule + tint, DS semantic hexes ---- */
+.stAlert, div[data-baseweb="notification"] {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-xs);
+  font-family: var(--font-sans) !important;
+}
+div[data-baseweb="notification"][kind="info"]    { background: var(--blue-100) !important;  border-left: 4px solid var(--blue-600) !important; }
+div[data-baseweb="notification"][kind="positive"],
+div[data-baseweb="notification"][kind="success"] { background: var(--green-100) !important; border-left: 4px solid var(--green-600) !important; }
+div[data-baseweb="notification"][kind="warning"]  { background: var(--gold-100) !important;  border-left: 4px solid var(--gold-600) !important; }
+div[data-baseweb="notification"][kind="negative"],
+div[data-baseweb="notification"][kind="error"]    { background: var(--red-100) !important;   border-left: 4px solid var(--red-600) !important; }
+
+/* ---- Expander — bordered flat card ---- */
+div[data-testid="stExpander"] {
+  background: var(--color-surface) !important;
+  border: var(--border-hairline) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-xs);
+}
+div[data-testid="stExpander"] summary { color: var(--color-text-brand) !important; font-weight: 600 !important; }
+div[data-testid="stExpander"] summary:hover { color: var(--navy-900) !important; }
+
+/* ---- Progress — flat blue on grey track ---- */
+.stProgress > div > div > div { background: var(--blue-500) !important; border-radius: var(--radius-pill) !important; height: 8px !important; }
+.stProgress > div > div { background: var(--grey-100) !important; border-radius: var(--radius-pill) !important; }
+
+/* ---- Framed demo image ---- */
+[data-testid="stImage"] img {
+  border: var(--border-hairline);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-xs);
 }
 
-.app-footer {
-  color: #687386;
-  font-size: 0.9rem;
-  text-align: center;
-}
+/* ---- Footer ---- */
+.app-footer { color: var(--color-text-muted); font-size: .9rem; text-align: center; }
 
-*:focus-visible {
-  outline: 2px solid var(--color-blue) !important;
-  outline-offset: 2px !important;
-}
+/* ---- Focus visibility (accessibility) ---- */
+*:focus-visible { outline: 2px solid var(--blue-500) !important; outline-offset: 2px !important; }
 
+/* ---- Responsive ---- */
 @media (max-width: 768px) {
-  .block-container {
-    padding-left: var(--space-4);
-    padding-right: var(--space-4);
-  }
-
-  h1 {
-    font-size: 1.9rem !important;
-  }
-
-  h2 {
-    font-size: 1.25rem !important;
-  }
+  .block-container { padding-left: var(--space-4); padding-right: var(--space-4); }
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.3rem !important; }
+  h3 { font-size: 1.2rem !important; }
 }
+
+/* ---- Respect reduced motion ---- */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-  }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
