@@ -1,20 +1,23 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: "[Feature]"
+about: Suggest an improvement to the Streamlit application
+title: "[Feature] "
 labels: enhancement
-assignees: Lofter1
-
+assignees: ''
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+## Problem
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+Describe the user problem or limitation you want to address.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## Proposed solution
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+Describe the behavior you would like and how it would improve the application.
+
+## Alternatives
+
+Describe any alternatives or workarounds you considered.
+
+## Additional context
+
+Add mockups, examples, or other relevant context. Requests must remain consistent with authorized-document use.

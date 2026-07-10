@@ -29,18 +29,28 @@ if "download_result" not in st.session_state:
 
 with st.container():
     st.markdown("### กำหนดลิงก์และตัวเลือกการดาวน์โหลด")
+    st.caption(
+        "ขั้นตอน: (1) วางลิงก์ AnyFlip → (2) ระบุชื่อไฟล์หรือใช้ชื่อหนังสือ → "
+        "(3) ยืนยันสิทธิ์ → (4) สร้างและดาวน์โหลด PDF"
+    )
 
     with st.form("anyflip_download_form", clear_on_submit=False):
         url = st.text_input(
             "ลิงก์ AnyFlip",
             placeholder="https://online.anyflip.com/owner/book/",
+            help="รองรับลิงก์หนังสือจากโดเมน anyflip.com รวมถึงลิงก์หน้าสำหรับมือถือ",
         )
         title_override = st.text_input(
             "ชื่อไฟล์ PDF",
             placeholder="เว้นว่างเพื่อใช้ชื่อหนังสือจาก AnyFlip",
+            help="ระบุเฉพาะชื่อไฟล์โดยไม่ต้องใส่นามสกุล .pdf",
         )
 
         with st.expander(":material/tune: ตัวเลือกขั้นสูง", expanded=False):
+            st.caption(
+                "ค่าเริ่มต้นเหมาะกับการใช้งานทั่วไป หากเครือข่ายไม่เสถียรให้ลดจำนวนงานพร้อมกัน "
+                "หรือเพิ่มจำนวนครั้งลองซ้ำ"
+            )
             col_threads, col_retries = st.columns(2)
             with col_threads:
                 threads = st.slider("จำนวนงานดาวน์โหลดพร้อมกัน", 1, 8, 4)
@@ -57,6 +67,10 @@ with st.container():
 
             verify_tls = st.checkbox("ตรวจสอบใบรับรอง TLS", value=True)
 
+        st.caption(
+            "ไฟล์ PDF จะอยู่ใน session ปัจจุบันเพื่อให้ดาวน์โหลดเท่านั้น "
+            "ระบบไม่บันทึกประวัติหรือเก็บไฟล์ถาวร"
+        )
         allowed = st.checkbox("ฉันยืนยันว่าเอกสารนี้อนุญาตให้ดาวน์โหลดเป็น PDF", value=False)
         submitted = st.form_submit_button(
             "เริ่มดาวน์โหลดและสร้าง PDF",
@@ -67,6 +81,10 @@ with st.container():
 
 if submitted:
     st.session_state.download_result = None
+
+    if not url.strip():
+        st.error("กรุณาระบุลิงก์ AnyFlip ก่อนเริ่มทำงาน")
+        st.stop()
 
     if not allowed:
         st.error("กรุณายืนยันสิทธิ์การดาวน์โหลดก่อนเริ่มทำงาน")
@@ -105,9 +123,9 @@ if submitted:
             progress_callback=update_progress,
         )
         progress_bar.progress(100)
-        status_text.markdown("เสร็จสิ้น")
+        status_text.markdown("สร้างไฟล์ PDF เสร็จสมบูรณ์")
         st.session_state.download_result = result
-        st.success("สร้างไฟล์ PDF เสร็จสมบูรณ์")
+        st.success("สร้างไฟล์ PDF เสร็จสมบูรณ์ พร้อมดาวน์โหลดแล้ว")
     except AnyFlipDownloadError as exc:
         progress_bar.empty()
         status_text.empty()
@@ -120,8 +138,8 @@ if submitted:
 
 result: DownloadResult | None = st.session_state.download_result
 if result:
-    st.markdown("### ผลลัพธ์")
-    st.caption(f"แหล่งข้อมูล: {result.normalized_url}")
+    st.markdown("### ผลลัพธ์และดาวน์โหลด")
+    st.caption(f"แหล่งข้อมูล AnyFlip: {result.normalized_url}")
     st.markdown(f"**ชื่อไฟล์:** `{result.file_name}`")
 
     metric_cols = st.columns(4)
@@ -133,7 +151,7 @@ if result:
     button_col, _ = st.columns([1, 2])
     with button_col:
         st.download_button(
-            label="ดาวน์โหลด PDF",
+            label=":material/download: ดาวน์โหลด PDF",
             data=result.pdf_bytes,
             file_name=result.file_name,
             mime="application/pdf",

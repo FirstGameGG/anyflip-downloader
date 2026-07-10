@@ -12,7 +12,7 @@ def load_custom_css(base_dir: Path) -> None:
 
 
 def render_header(base_dir: Path) -> None:
-    header_col, media_col = st.columns([5, 2], vertical_alignment="center")
+    header_col, logo_col = st.columns([6, 1], vertical_alignment="center")
     with header_col:
         st.title("ระบบดาวน์โหลด AnyFlip เป็น PDF")
         st.header("แปลงหนังสือออนไลน์เป็นไฟล์ PDF")
@@ -21,10 +21,10 @@ def render_header(base_dir: Path) -> None:
             "และรวมเป็นไฟล์ PDF พร้อมดาวน์โหลดในหน้าเดียว"
         )
 
-    demo_path = base_dir / "assets" / "demo.gif"
-    with media_col:
-        if demo_path.exists():
-            st.image(str(demo_path), width="stretch")
+    logo_path = base_dir / "assets" / "anyflip.jpg"
+    with logo_col:
+        if logo_path.exists():
+            st.image(str(logo_path), width="stretch")
 
     st.divider()
 

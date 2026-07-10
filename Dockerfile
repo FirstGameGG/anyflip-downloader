@@ -1,14 +1,27 @@
-FROM golang:1.24-alpine AS build
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
 WORKDIR /app
-COPY . .
 
-ENV CGO_ENABLED=0
-RUN go build -o anyflip-downloader .
+RUN addgroup --system app && adduser --system --ingroup app app
 
-FROM alpine:latest
-COPY --from=build /app/anyflip-downloader /usr/local/bin/anyflip-downloader
+COPY requirements.txt ./
+RUN python -m pip install --upgrade pip \
+    && python -m pip install -r requirements.txt
 
-WORKDIR /data
-ENTRYPOINT ["anyflip-downloader"]
-CMD ["--help"]
+COPY --chown=app:app app.py anyflip_downloader.py ui_components.py ./
+COPY --chown=app:app .streamlit/ ./.streamlit/
+COPY --chown=app:app assets/ ./assets/
+
+USER app
+
+EXPOSE 8501
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+
+ENTRYPOINT ["python", "-m", "streamlit", "run", "app.py", "--server.address=0.0.0.0", "--server.port=8501"]

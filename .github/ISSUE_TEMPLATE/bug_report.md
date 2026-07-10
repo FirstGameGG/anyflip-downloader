@@ -1,23 +1,33 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
+about: Report a reproducible problem with the Streamlit application
+title: "[Bug] "
 labels: bug
-assignees: Lofter1
-
+assignees: ''
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Description
 
-OS: [e.g. Windows]
+Describe what happened and which part of the application was affected.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+## Steps to reproduce
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+1.
+2.
+3.
 
+## Expected behavior
 
-**Additional context**
-Add any other context about the problem here.
+Describe what you expected to happen.
+
+## Environment
+
+- Operating system:
+- Browser and version:
+- Python version:
+- Streamlit version:
+- Local, Docker, or hosted deployment:
+
+## Additional context
+
+Include relevant error messages, logs, or screenshots. Do not attach copyrighted book pages or private URLs.

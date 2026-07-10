@@ -1,134 +1,136 @@
-# anyflip-downloader
+# AnyFlip PDF Downloader
 
-[![build](https://github.com/Lofter1/anyflip-downloader/actions/workflows/build.yml/badge.svg)](https://github.com/Lofter1/anyflip-downloader/actions/workflows/build.yml)
-[![goreleaser](https://github.com/Lofter1/anyflip-downloader/actions/workflows/release.yml/badge.svg)](https://github.com/Lofter1/anyflip-downloader/actions/workflows/release.yml)
+[![CI](https://github.com/FirstGameGG/anyflip-downloader/actions/workflows/build.yml/badge.svg)](https://github.com/FirstGameGG/anyflip-downloader/actions/workflows/build.yml)
 
-Download anyflip books as PDF
+<p align="center">
+  <img src="assets/anyflip.jpg" alt="AnyFlip" width="180">
+</p>
 
-![Demo](/assets/demo.gif)
+A Thai-language Streamlit application that downloads permitted AnyFlip page images and combines them into a PDF.
 
 ## Disclaimer
 
-Only use this tool to download books that officially allow PDFs to be downloaded.
+Use this application only for documents whose owner explicitly permits PDF downloading. You are responsible for complying with copyright law, the publisher's terms, and AnyFlip's terms of service.
 
-## Streamlit web app
+This project does not determine whether you have permission, bypass authentication or access controls, or have any affiliation with AnyFlip. AnyFlip and its logo are the property of their respective owner.
 
-This repository now includes a Python-native Streamlit app for downloading one allowed AnyFlip book at a time and exporting it as a PDF.
+## Features
 
-### Run locally
+- Accepts standard and mobile `anyflip.com` book URLs
+- Uses the AnyFlip book title or an optional custom PDF filename
+- Downloads pages concurrently with configurable retries and delay
+- Displays progress, result metrics, and an execution log
+- Preserves page order and original image dimensions
+- Generates PDFs without permanent server-side file storage
+- Provides a responsive Thai interface built with Streamlit
 
-```sh
+## Local setup
+
+Python 3.12 is recommended.
+
+```bash
+git clone https://github.com/FirstGameGG/anyflip-downloader.git
+cd anyflip-downloader
+
 python -m venv .venv
 source .venv/bin/activate
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
-streamlit run app.py
+
+python -m streamlit run app.py
 ```
 
-### Deploy to Streamlit Community Cloud
+On Windows, activate the environment with:
 
-Use `app.py` as the app entrypoint. Python dependencies are declared in `requirements.txt`, and the Streamlit theme is configured in `.streamlit/config.toml`.
-
-The web app keeps generated PDFs in the active Streamlit session only. It does not store download history or persist output files.
-
-## Installation
-You can install this tool in multiple ways. Using the installation script or the go install command.
-
-The install scripts are the suggested installation method for most users. 
-
-### Install scripts
-
-#### Linux/MacOS
-Open the terminal and execute
-```sh
-curl -L https://raw.githubusercontent.com/Lofter1/anyflip-downloader/main/scripts/install.sh | /usr/bin/env bash
-```
-##### Setup path
-When encountering the error "Command not found": make sure your path variable contains `$HOME/.local/bin` (edit this in your .zshrc or .bashrc depending on your editor)
-
-#### Windows
-Open PowerShell and execute
-```PowerShell
-. { iwr -useb https://raw.githubusercontent.com/Lofter1/anyflip-downloader/main/scripts/install.ps1 } | iex;
+```powershell
+.venv\Scripts\Activate.ps1
 ```
 
-### Go install
-For `go install`, the [go tools](https://go.dev/doc/install) are required.
-
-```sh
-go install github.com/Lofter1/anyflip-downloader@latest
-```
+Then open [http://localhost:8501](http://localhost:8501).
 
 ## Usage
 
-```sh
-anyflip-downloader <url to book>
+1. Paste a permitted AnyFlip URL, such as `https://online.anyflip.com/owner/book/`.
+2. Optionally enter a custom PDF filename.
+3. Adjust the advanced options when needed.
+4. Confirm that the document is permitted for PDF download.
+5. Select **เริ่มดาวน์โหลดและสร้าง PDF**.
+6. Review the result and download the generated PDF.
+
+## Advanced options
+
+| Option | Default | Purpose |
+| --- | ---: | --- |
+| Concurrent downloads | 4 | Number of pages downloaded simultaneously |
+| PDF batch size | 10 pages | Number of images processed in each PDF batch |
+| Retries per page | 1 | Additional attempts after a failed page request |
+| Retry delay | 1 second | Wait time before another attempt |
+| TLS verification | Enabled | Verifies HTTPS certificates and should normally remain enabled |
+
+Lower concurrency can help on unstable networks. Smaller PDF batches reduce peak processing load but may take longer.
+
+## How it works
+
+1. The application normalizes the submitted URL to its AnyFlip owner and book identifiers.
+2. It reads the public viewer's `config.js` to determine the title, page count, and available page assets.
+3. Page images are downloaded concurrently into a temporary directory, with retries when configured.
+4. The images are combined in order into an image-based PDF, then the temporary files are removed.
+5. The PDF bytes remain only in the active Streamlit session until the session ends or a new job starts.
+
+## Project structure
+
+```text
+.
+├── app.py                    # Streamlit UI, validation, progress, and results
+├── anyflip_downloader.py     # URL parsing, downloads, retries, and PDF generation
+├── ui_components.py          # Shared header, footer, and stylesheet loading
+├── assets/anyflip.jpg        # Header and README logo
+├── .streamlit/               # Theme and responsive application styling
+├── tests/                    # Downloader unit tests and Streamlit UI tests
+├── requirements.txt          # Python dependencies
+└── Dockerfile                # Containerized Streamlit application
 ```
 
-### Set title manually
+The main Python interface is `download_book()`. It accepts `DownloadOptions`, returns `DownloadResult`, and raises `AnyFlipDownloadError` for expected failures.
 
-If you do not want to use the book title from anyflip, you can change it using the `-title` flag.
+## Testing
 
-```sh
-anyflip-downloader -title <your book title> <url to book>
+```bash
+python -m py_compile app.py anyflip_downloader.py ui_components.py tests/test_app.py tests/test_anyflip_downloader.py
+python -m unittest discover -s tests -v
 ```
 
-### Specify temporary download folder path
+The tests cover URL validation, metadata parsing, page URL generation, safe filenames, PDF creation, initial UI rendering, and form validation without live AnyFlip requests.
 
-The default temporary download folder path will be the title of the book. However, in certain situations, you might want to change the temporary download folder. For this, the `-temp-download-folder` flag exists. This folder will be deleted after a successful download.
+## Docker
 
-```sh
-anyflip-downloader -temp-download-folder <temp folder name> <url to book>
-```
-
-### Define converting chunk size
-
-By default, anyflip downloader will convert 10 images at a time. You can tell anyflip to convert more or less images at a time.
-
-A lower number will result in less memory usage, but more writes to the drive, and therefore might increase time to convert.
-A higher number will result in more memory usage, but less writes and might increase converting speed. If the number is higher than the total amount of pages, the amount of pages currently being converted is automatically taken instead.
-
-```sh
-anyflip-downloader -chunksize <chunkzise> <url to book>
-```
-
-### Advanced file download options
-
-#### Parallel retrieval
-By default, downloads are performed in a single thread. To improve performance, multiple pages can be downloaded simultaneously. Use the `-threads` flag to control the number of parallel jobs.
-```sh
-anyflip-downloader -threads <number of parallel jobs> <url to book>
-```
-
-#### Download retries
-Occasionally, a request may fail due to temporary issues such as timeouts. Use the `-retries` flag to specify how many times a failed page should be retried before giving up:
-```sh
-anyflip-downloader -retires <number of attempts> <url to book>
-```
-
-#### Retry delay
-To avoid overwhelming the server or triggering rate limits, you can introduce a delay between retry attempts. The `-waitretry` flag accepts any valid Go duration format (e.g., 500ms, 2s, 1m).
-```sh
-anyflip-downloader -waitretry <duration> <url to book>
-```
-
-
-### Docker usage:
-
-If you are familiar with docker you can always execute
-
-
-```sh
+```bash
 docker build -t anyflip-downloader .
+docker run --rm -p 8501:8501 anyflip-downloader
 ```
 
-And run it by doing
+Open [http://localhost:8501](http://localhost:8501).
 
-```sh
-docker run --rm -v "$(pwd)":/data anyflip-downloader <url to book>
-```
+## Deployment
 
-You can also combine this comand with any of the above for example:
+For Streamlit Community Cloud, select `app.py` as the entrypoint. Dependencies are declared in `requirements.txt`; no application secrets are required.
 
-```sh
-docker run --rm -v "$(pwd)":/data anyflip-downloader -title <your book title> <url to book>
-```
+The deployment environment must allow outbound HTTPS requests to public AnyFlip assets. Large books may exceed the memory or execution limits of hosted environments.
+
+## Limitations
+
+- Supports only AnyFlip URLs containing an owner and book identifier
+- Requires publicly accessible viewer metadata and page assets
+- Does not support private, authenticated, or access-controlled books
+- Produces image-based PDFs without selectable text, links, or document structure
+- Very large books may require substantial memory and processing time
+- Changes to AnyFlip's viewer format may require parser updates
+- Provides no queue, history, persistent storage, REST API, or command-line interface
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and validation guidance.
+
+## License
+
+Licensed under the [GNU General Public License v3.0](LICENSE).
